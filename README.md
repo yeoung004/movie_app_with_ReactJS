@@ -1,2 +1,2 @@
 # My first App with React.js
-### I'm gonna be a good back-end developer😊
+### This app is my first app with React.js
