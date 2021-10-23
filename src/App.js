@@ -1,57 +1,50 @@
 import React from 'react';
-import propTypes from "prop-types";
+import axios from 'axios';
+import Movie from './Movie';
+import "./App.css";
 
-const foodWhatILike = [
-  {
-    id : 1,
-    name : "Kimchi",
-    image : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.9UbaWIQhQ_kybBwlg4RD_wHaE8%26pid%3DApi&f=1",
-    rating : 4.5
-  },
-  {
-    id : 2,
-    name : "Ramen",
-    image : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.mIrJYFEo-bS1lLKWV2pV2wHaE7%26pid%3DApi&f=1",
-    rating : 3.8
-  },
-  {
-    id : 3,
-    name : "Noodle",
-    image : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.vFeytGRIasd8dLMA1F0OUgHaFY%26pid%3DApi&f=1",
-    rating : 4.1
-  },
-  {
-    id : 4,
-    name : "BBQ",
-    image : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.X03PZT37-8ZNXtxy3c7k-QHaFe%26pid%3DApi&f=1",
-    rating : 5.0
+class App extends React.Component {
+  state = {
+    isLoading: true,
+    movies: []
+  };
+
+  getMoives = async () => {
+    const { data: { data: { movies } } } = await axios.get("https://yts-proxy.now.sh/list_movies.json?sort_by=rating");
+    this.setState({ movies, isLoading: false });
+  };
+
+  componentDidMount() {
+    this.getMoives();
   }
-];
 
-Food.propTypes = {
-  name : propTypes.string.isRequired,
-  pictures : propTypes.string.isRequired,
-  rating : propTypes.number.isRequired
-}
-
-function Food({ name, pictures, rating }) {
-  return (
-    <div>
-      <h1>I like { name }</h1>
-      <h3>{rating}/5.0</h3>
-      <img src={ pictures }/>
-    </div>
-  );
-}
-
-function App() {
-  return (
-    <div>
-      { foodWhatILike.map(dish => 
-        <Food key={dish.id} name={dish.name} pictures={dish.image} rating={dish.rating}/>
-      )}
-    </div>
-  );
+  render() {
+    const { isLoading, movies } = this.state;
+    return (
+      <section className="container">
+        {isLoading ? (
+          <div className="loader">
+            <span className="loader__text">Loading</span>
+          </div>
+        ) : (
+          <div className="movies">
+              {movies.map(movie => {
+                return (
+                  <Movie
+                    id={movie.id}
+                    year={movie.year}
+                    title={movie.title}
+                    summary={movie.summary}
+                    poster={movie.medium_cover_image}
+                    genres={movie.genres}
+                  />
+                );
+              })}
+          </div>
+        )}
+      </section>
+    );
+  }
 }
 
 export default App;
