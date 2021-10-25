@@ -1,0 +1,55 @@
+html, body, .meat{
+    height: 100%;
+    width: 100%;
+}
+
+.detail {
+    top: 200px;
+    position: relative;
+    align-content: center;
+    margin: 0 auto;
+    width: 1000px;
+    height: 465px;
+    padding: 25px;
+    box-shadow: 0px 0px 10px 5px gray;
+}
+
+.detail__poster {
+    display: inline-block;
+    margin-left: 20px;
+    width: 300px;
+    border: 5px solid whitesmoke;
+}
+
+.detail__movie {
+    display: inline-block;
+    position: absolute;
+    margin-left: 70px;
+    width:50%;
+}
+
+.detail__movie__title {
+    font-size: 2rem;
+}
+
+.detail__movie__rating {
+    line-height: 35px;
+}
+
+.detail__movie__genres {
+    font-size: 0.8rem;
+}
+
+.detail__movie__genres li{
+    display: inline;
+    margin-right: 10px;
+}
+
+.detail__movie__story {
+    font-size: 1.2rem;
+    margin-top: 30px;
+    line-height: 25px;
+}
+
+
+
